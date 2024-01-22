@@ -66,8 +66,27 @@ class saucedemo {
 
 	@Then ("User can see the Error Message")
 	def verifyErrorMessage() {
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/Login/errorMessageForLockedUser'), FailureHandling.STOP_ON_FAILURE)
-		WebUI.verifyElementText(findTestObject('sauce-demo/Login/errorMessageForLockedUser'), 'Epic sadface: Sorry, this user has been locked out.')
+		WebUI.waitForElementVisible(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), 0)
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), 'Epic sadface: Sorry, this user has been locked out.')
+	}
+
+	@Then ("User can see the Error Message for password is required")
+	def verifyErrorMessagePassword() {
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), 'Epic sadface: Password is required')
+	}
+
+	@Then ("User can see the Error Message for username is required")
+	def verifyErrorMessageUsername() {
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), 'Epic sadface: Username is required')
+	}
+
+	@Then ("User can see the Error Message for doesn't match")
+	def verifyErrorMessageDoesntMatch() {
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/Login/errorMessage'), 'Epic sadface: Username and password do not match any user in this service')
 	}
 
 	@Then("User is already on homepage")
@@ -78,16 +97,18 @@ class saucedemo {
 
 	@And("User click the add to cart button on sauce labs backpack products from homepage")
 	def clickAddToCartFromHomepage() {
-		WebUI.click(findTestObject('sauce-demo/homepage/buttonAddtoCart1'))
+		WebUI.click(findTestObject('Object Repository/sauce-demo/homepage/button_ADD TO CART'))
 	}
 	@And("User click the product of sauce labs bike light product")
 	def clickProduct() {
+		WebUI.delay(2)
 		WebUI.click(findTestObject('sauce-demo/homepage/title_Sauce Labs Bike Light'))
 	}
 	@And("User click the add to cart button from detail product page")
 	def clickAddToCartFromDetailPage() {
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/product detail page/buttonAddtoCartBikeLight'))
-		WebUI.click(findTestObject('sauce-demo/product detail page/buttonAddtoCartBikeLight'))
+		WebUI.delay(2)
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/product detail page/button_ADD TO CART'))
+		WebUI.click(findTestObject('Object Repository/sauce-demo/product detail page/button_ADD TO CART'))
 	}
 	@And("User click the shopping cart icon")
 	def clickShoppingCartIcon() {
@@ -95,8 +116,8 @@ class saucedemo {
 	}
 	@And("User click the checkout button")
 	def clikButtonCheckout() {
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/shoppingCart/title_Your Cart'), FailureHandling.STOP_ON_FAILURE)
-		WebUI.click(findTestObject('sauce-demo/shoppingCart/buttonCheckout'))
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/shoppingCart/a_CHECKOUT'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.click(findTestObject('Object Repository/sauce-demo/shoppingCart/a_CHECKOUT'))
 	}
 
 	@And("User input (.*) and (.*) and (.*) on checkout page")
@@ -108,32 +129,34 @@ class saucedemo {
 
 	@And("User click button continue")
 	def clikButtonContinue() {
-		WebUI.click(findTestObject('sauce-demo/checkOutPage/buttoncontinue'))
+		WebUI.click(findTestObject('Object Repository/sauce-demo/checkOutPage/buttonContinue (1)'))
 	}
 
 	@Then("User can see the Error Message of required field")
 	def verifyErrorMessageLastName() {
-		WebUI.verifyElementText(findTestObject('sauce-demo/checkOutPage/ErrorMessageForLastNameIsRequired'), 'Error: Last Name is required')
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/checkOutPage/h3_Error Last Name is required'), 'Error: Last Name is required')
 	}
 
 	@And("User verify total price")
 	def verifyPriceTotal() {
-		WebUI.scrollToElement(findTestObject('sauce-demo/checkoutReview/buttonFinish'), 3)
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/checkoutReview/priceTotal'), FailureHandling.STOP_ON_FAILURE)
-		WebUI.verifyElementText(findTestObject('sauce-demo/checkoutReview/priceTotal'), 'Total: $43.18')
+		WebUI.scrollToElement(findTestObject('Object Repository/sauce-demo/checkoutReview/a_FINISH'), 3)
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/checkoutReview/div_Total 43.18'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/checkoutReview/div_Total 43.18'), 'Total: $43.18')
 	}
 
 	@And("User verify products: sauce labs backpack and sauce labs bike light are displayed in checkout overview page")
 	def verifyProductsAreDisplayed () {
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/checkoutReview/title_Sauce Labs Backpack'), FailureHandling.STOP_ON_FAILURE)
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/checkoutReview/title_Sauce Labs Bike Light'), FailureHandling.STOP_ON_FAILURE)
-		WebUI.verifyElementText(findTestObject('sauce-demo/checkoutReview/title_Sauce Labs Backpack'), 'Sauce Labs Backpack')
-		WebUI.verifyElementText(findTestObject('sauce-demo/checkoutReview/title_Sauce Labs Bike Light'), 'Sauce Labs Bike Light')
+		WebUI.verifyElementVisible(findTestObject('sauce-demo/checkoutReview/div_Sauce Labs Backpack'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementVisible(findTestObject('sauce-demo/checkoutReview/div_Sauce Labs Bike Light'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('sauce-demo/checkoutReview/div_Sauce Labs Backpack'), 'Sauce Labs Backpack')
+		WebUI.verifyElementText(findTestObject('sauce-demo/checkoutReview/div_Sauce Labs Bike Light'), 'Sauce Labs Bike Light')
 	}
 
 	@And("User click button Finish")
 	def clickButtonFinish() {
-		WebUI.click(findTestObject('sauce-demo/checkoutReview/buttonFinish'))
+		WebUI.click(findTestObject('Object Repository/sauce-demo/checkoutReview/a_FINISH'))
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/CheckoutComplete/h2_THANK YOU FOR YOUR ORDER'), FailureHandling.STOP_ON_FAILURE)
+		WebUI.verifyElementText(findTestObject('Object Repository/sauce-demo/CheckoutComplete/h2_THANK YOU FOR YOUR ORDER'), 'THANK YOU FOR YOUR ORDER')
 	}
 
 	@And("User click on Back to Home")
@@ -144,20 +167,20 @@ class saucedemo {
 
 	@And("User click on hamburger menu")
 	def clickHamburgerMenu() {
-		WebUI.click(findTestObject('sauce-demo/Logout/buttonHamburgerMenu'))
-		WebUI.verifyElementPresent(findTestObject('sauce-demo/Logout/buttonLogout'), 2)
+		WebUI.click(findTestObject('Object Repository/sauce-demo/Logout/button_Open Menu'))
+		WebUI.verifyElementPresent(findTestObject('Object Repository/sauce-demo/Logout/a_Logout'), 2)
 	}
 
 	@When("User click on Logout")
 	def clickButtonLogout() {
-		WebUI.verifyElementPresent(findTestObject('sauce-demo/Logout/buttonLogout'), 2)
-		WebUI.click(findTestObject('sauce-demo/Logout/buttonLogout'))
+		WebUI.verifyElementPresent(findTestObject('Object Repository/sauce-demo/Logout/a_Logout'), 2)
+		WebUI.click(findTestObject('Object Repository/sauce-demo/Logout/a_Logout'))
 	}
 
 	@Then("User is on login screen")
 	def onLoginPage() {
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/Login/title_Swag Labs'))
-		WebUI.verifyElementVisible(findTestObject('sauce-demo/Login/buttonLogin'))
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/buttonLogin'))
+		WebUI.verifyElementVisible(findTestObject('Object Repository/sauce-demo/Login/buttonLogin'))
 	}
 }
 

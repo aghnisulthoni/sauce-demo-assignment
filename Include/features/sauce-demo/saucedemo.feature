@@ -20,7 +20,7 @@
 Feature: I want to buy an product on sauce-demo web
   
   @tag1
-  Scenario Outline: User failed to login because the account is locked
+   Scenario Outline: User failed to login because the account is locked
     Given User access the saucedemo URL
     When User input <username> and <password> in the fields
     And User click the login button
@@ -28,9 +28,59 @@ Feature: I want to buy an product on sauce-demo web
     Examples: 
       | username 		 		 | password 		|
       | locked_out_user  | secret_sauce |
-      
+ 
   @tag2
-  Scenario Outline: User successfully login on saucedemo website
+   Scenario Outline: User failed to login because user doesn't input password field
+    Given User access the saucedemo URL
+    When User input <username> and <password> in the fields
+    And User click the login button
+		Then User can see the Error Message for password is required
+    Examples: 
+      | username 		 		 | password 		|
+      | standard_user    |	          	|
+   
+  @tag3
+   Scenario Outline: User failed to login because user doesn't input username field
+    Given User access the saucedemo URL
+    When User input <username> and <password> in the fields
+    And User click the login button
+		Then User can see the Error Message for username is required
+    Examples: 
+      | username 		 		 | password 		|
+      |                  | secret_sauce |     
+      
+  @tag4
+   Scenario Outline: User failed to login because user doesn't input username and password field
+    Given User access the saucedemo URL
+    When User input <username> and <password> in the fields
+    And User click the login button
+		Then User can see the Error Message for username is required
+    Examples: 
+      | username 		 		 | password 		|
+      |                  |              | 
+      
+ @tag5
+   Scenario Outline: User failed to login because User input incorrect username and correct password
+    Given User access the saucedemo URL
+    When User input <username> and <password> in the fields
+    And User click the login button
+		Then User can see the Error Message for doesn't match
+    Examples: 
+      | username 		 		     | password 		  |
+      | standard_userrrrr    | secret_sauce   |
+      
+ @tag6
+   Scenario Outline: User failed to login because User input incorrect username and incorrect password
+    Given User access the saucedemo URL
+    When User input <username> and <password> in the fields
+    And User click the login button
+		Then User can see the Error Message for doesn't match
+    Examples: 
+      | username 		 		     | password 		    |
+      | standard_userrrrr    | secret_sauceee   |     
+  
+ @tag7
+   Scenario Outline: User successfully login on saucedemo website
     Given User access the saucedemo URL
     When User input <username> and <password> in the fields
     And User click the login button
@@ -39,8 +89,8 @@ Feature: I want to buy an product on sauce-demo web
       | username 		 		 | password 		|
       | standard_user    | secret_sauce |
       
-   @tag3
-   Scenario Outline: User failed to checkout the products because the user doesn't input the required field
+ @tag8
+   Scenario Outline: User failed to checkout the products because the user doesn't input the required field (last name)
     Given User access the saucedemo URL
     When User input <username> and <password> in the fields
     And User click the login button
@@ -57,7 +107,7 @@ Feature: I want to buy an product on sauce-demo web
       | username 		 	 | password 		| FirstName | LastName | ZipCode |
       | standard_user  | secret_sauce | dummy		  |      		 | 28654   |
     
-   @tag4
+  @tag9
    Scenario Outline: User successfully to checkout the products
     Given User access the saucedemo URL
     And User input <username> and <password> in the fields
@@ -73,8 +123,6 @@ Feature: I want to buy an product on sauce-demo web
     And User verify total price
     And User verify products: sauce labs backpack and sauce labs bike light are displayed in checkout overview page
     And User click button Finish
-    And User click on Back to Home
-    And User is already on homepage
     And User click on hamburger menu
     When User click on Logout
     Then User is on login screen
